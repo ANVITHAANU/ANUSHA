@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://kit.fontawesome.com/3d13f32a14.js" crossorigin="anonymous"></script>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<title>LCM Calculator</title>
+
+</head>
+<body>
+
+<!-- header -->
+
+
+<center>
+	<h1 style="color: red; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">  <p style="color:blue" >Least Common Multiple (LCM)</p>  &  Greatest Common Factor(GCF) Calculator</h1>
+</center>
+  
+
+<!-- body -->
+	<div >
+	<br>
+	<form id="calcform" class="row g-3 p-3 mb-3" name="calcform" autocomplete="off">
+	<div class="form-group">
+	<label for="data"><b> Enter positive integer numbers:</b></label>
+	<textarea rows="2" id="data" class="form-control" placeholder="2 4 6" autofocus></textarea>
+	</div>
+	<div class="form-group">
+	<div>
+	<button type="button" id="calc" title="Calculate" onclick="lcmcalc()" class="btn btn-success"><span>=</span> Calculate</button>
+	<button type="reset" id="reset" title="Reset" class="btn btn-secondary"><span>&times;</span> Reset</button>
+	</div>
+	</div>
+	<div class="form-group">
+	<label for="lcm"><b> Least common multiple (LCM):</b></label>
+	<input type="text" id="lcm" class="form-control form-control-lg" readonly>
+	</div>
+	<div class="form-group">
+	<label for="hcf"><b> Greatest common factor (GCF):</b></label>
+	<input type="text" id="gcf" class="form-control form-control-lg" readonly>
+	</div>
+	
+	</form>
+	
+</div>
+	
+	<script> 
+	   function decnum(x) {
+		  if(Math.floor(x) === x) return 0;
+		  return x.toString().split(".")[1].length || 0; 
+	   }
+	   function lcmcalc()
+	   {
+		  //var primes=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211];
+		  var data = document.getElementById("data").value;
+		  if( data=="" ) return;
+		  //data = data.match(/\d+/g);
+		  data = data.split(" ");
+		//   SetLinks(data);
+		  var d,dmax=0;
+		  for(var i=0; i<data.length; i++) {
+			 d = decnum(Math.abs(parseFloat(data[i])));
+			 if( d>dmax ) dmax=d;
+		  }
+		  var f=Math.pow(10,dmax);
+		  for(var i=0; i<data.length; i++)
+			 data[i] = f*Math.abs(parseFloat(data[i]));
+		  if( data.length<2 ) return;
+		  var gcf,lcm;
+		  for(var i=0; i<data.length-1; i++) {
+			 if( i==0 )
+				gcf = hcf
+                (data[0],data[1]);
+			 else
+				gcf = hcf
+                (gcf,data[i+1]);
+		  }
+		  for(var i=0; i<data.length-1; i++) {
+			 if( i==0 )
+				lcm = lcm2(data[0],data[1]);
+			 else
+				lcm = lcm2(lcm,data[i+1]);
+		  }
+	
+		  document.getElementById("gcf").value = gcf/f;
+		  document.getElementById("lcm").value = lcm/f;
+	   }
+	   var hcf
+       = function(a,b)
+	   {
+		  while( a!=b ) {
+			 if( a>b )
+				a = a-b;
+			 else
+				b = b-a;
+		  }
+		  return a;
+	   };
+	   var lcm2 = function(a,b)
+	   {
+		  return a*b/hcf
+          (a,b);
+	   };
+	</script>
+
+</body>
+</html>
